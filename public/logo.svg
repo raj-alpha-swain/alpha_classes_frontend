@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="140 110 430 465">
+  <title>Alpha Classes</title>
+  <defs>
+    <!-- centre line of the letter "a" -->
+    <path id="a" d="M200,236 C204,166 262,138 334,138 C414,138 462,176 462,252 L462,522
+                    M462,300 C392,294 274,298 210,346 C156,388 164,494 240,528 C306,558 404,542 462,470"/>
+    <!-- same line with its open ends pulled in, so the white core never reaches the tips -->
+    <path id="core" d="M201,222 C206,166 262,138 334,138 C414,138 462,176 462,252 L462,508
+                    M462,300 C392,294 274,298 210,346 C156,388 164,494 240,528 C306,558 404,542 462,470"/>
+  </defs>
+  <g fill="none" stroke-linejoin="round">
+    <!-- outlined letter: blue stroke with a white core -->
+    <use href="#a" stroke="#1b96de" stroke-width="44" stroke-linecap="square"/>
+    <use href="#core" stroke="#fff" stroke-width="24"/>
+    <!-- inner curl sweeping round the bowl -->
+    <path d="M226,514 C292,540 392,520 428,462 C452,420 446,360 400,336" stroke="#1b96de" stroke-width="20" stroke-linecap="round"/>
+    <path d="M412,368 L432,360 M432,410 L450,404 M418,466 L436,474" stroke="#0c1a2e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- double chevron head of the curl, pointing left -->
+  <path d="M342,334 L392,306 L382,334 L392,362 Z M372,334 L414,312 L406,334 L414,356 Z" fill="#1b96de"/>
+  <!-- dark speed swoosh under the bowl -->
+  <path d="M163,438 C166,515 222,560 316,568 C252,553 186,512 171,446 Z" fill="#0c1a2e"/>
+  <path d="M352,566 C404,562 440,544 462,522 C432,538 398,548 352,556 Z" fill="#0c1a2e"/>
+  <!-- feathered arrow on the right, pointing down -->
+  <path d="M498,170 L512,204 L512,168 L525,206 L530,160 L536,206 L548,168 L546,212 L558,190 L552,300
+           L556,468 L534,560 L512,468 L506,300 L494,196 Z" fill="#1b96de"/>
+  <g stroke="#0c1a2e" stroke-width="4" stroke-linecap="round">
+    <path d="M514,214 L520,286"/><path d="M531,214 L531,318"/><path d="M546,220 L541,288"/>
+  </g>
+</svg>

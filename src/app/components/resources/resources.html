@@ -1,0 +1,73 @@
+<section class="section" id="resources">
+  <div class="container">
+    <div class="head">
+      <div class="section-head">
+        <span class="eyebrow" appReveal>Try before you join</span>
+        <h2 appReveal [revealDelay]="80">Demo papers &amp; <em class="accent grad-text">teaching videos</em></h2>
+        <p appReveal [revealDelay]="160">Download a sample paper or watch a short lesson to see exactly how we teach.</p>
+      </div>
+
+      <div class="tabs" role="tablist" appReveal [revealDelay]="200" [class.right]="tab() === 'videos'">
+        <span class="indicator" aria-hidden="true"></span>
+        <button role="tab" [attr.aria-selected]="tab() === 'papers'" [class.on]="tab() === 'papers'" (click)="select('papers')">
+          📄 Question papers <span class="count">{{ papers.length }}</span>
+        </button>
+        <button role="tab" [attr.aria-selected]="tab() === 'videos'" [class.on]="tab() === 'videos'" (click)="select('videos')">
+          ▶ Teaching videos <span class="count">{{ videos.length }}</span>
+        </button>
+      </div>
+    </div>
+
+    @switch (tab()) {
+      @case ('papers') {
+        <div class="panel papers" role="tabpanel">
+          @for (p of papers; track p.file; let i = $index) {
+            <a class="paper" [href]="p.file" target="_blank" rel="noopener" download [style.--i]="i">
+              <div class="sheet" aria-hidden="true">
+                <span class="fold"></span>
+                <span class="ln w80"></span><span class="ln"></span><span class="ln w60"></span>
+                <span class="ln"></span><span class="ln w70"></span>
+                <span class="pdf">PDF</span>
+              </div>
+              <div class="info">
+                <span class="meta">{{ p.subject }} · {{ p.classLevel }}</span>
+                <strong>{{ p.title }}</strong>
+                <span class="dl">
+                  Download
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>
+                </span>
+              </div>
+            </a>
+          }
+        </div>
+      }
+      @case ('videos') {
+        <div class="panel videos" role="tabpanel">
+          @for (v of videos; track v.title; let i = $index) {
+            <article class="video" [style.--i]="i">
+              <div class="frame">
+                @if (!v.youtubeId) {
+                  <div class="placeholder">
+                    <span class="play"><span>▶</span></span>
+                    <small>Video coming soon</small>
+                  </div>
+                } @else if (playing() === v.youtubeId) {
+                  <iframe [src]="embed(v)" [title]="v.title" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                } @else {
+                  <button class="thumb" (click)="playing.set(v.youtubeId)" [attr.aria-label]="'Play ' + v.title">
+                    <img [src]="thumb(v)" [alt]="v.title" loading="lazy" />
+                    <span class="play"><span>▶</span></span>
+                  </button>
+                }
+              </div>
+              <div class="vbody">
+                <small>{{ v.topic }}</small>
+                <strong>{{ v.title }}</strong>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

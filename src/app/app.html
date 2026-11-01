@@ -1,0 +1,17 @@
+<app-header />
+<main>
+  <app-hero />
+  <app-about />
+  <app-hall-of-fame />
+  <app-resources />
+  <app-contact />
+</main>
+<app-footer />
+
+<div class="floaters">
+  <button class="to-top" [class.show]="showTop()" (click)="toTop()" aria-label="Back to top">↑</button>
+  <a class="wa-float" [href]="whatsappLink" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <span class="tip">Chat with us</span>
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.04 3C9.4 3 4 8.36 4 14.97c0 2.11.56 4.17 1.62 5.99L4 29l8.27-1.6a12.1 12.1 0 0 0 3.77.6C22.68 28 28 22.62 28 16.01 28 9.4 22.68 3 16.04 3Zm5.36 15.44c-.29-.15-1.73-.85-2-.95-.27-.1-.47-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.73-1.63-2.03-.17-.29-.02-.45.13-.6.13-.13.3-.34.44-.51.15-.17.2-.3.3-.49.1-.2.05-.37-.03-.51-.07-.15-.66-1.6-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.44s1.05 2.83 1.2 3.03c.14.2 2.05 3.13 4.98 4.39 2.94 1.27 2.94.85 3.47.8.53-.05 1.73-.7 1.97-1.39.25-.68.25-1.27.17-1.39-.07-.12-.27-.2-.56-.34Z"/></svg>
+  </a>
+</div>

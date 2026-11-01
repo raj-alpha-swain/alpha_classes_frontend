@@ -1,0 +1,69 @@
+<section class="section hof" id="hall-of-fame">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow" appReveal>Hall of Fame</span>
+      <h2 appReveal [revealDelay]="80">Our students, <em class="accent grad-text">then &amp; now</em></h2>
+      <p appReveal [revealDelay]="160">What they achieved at Alpha Classes — flip a card to see where that foundation has taken them.</p>
+    </div>
+
+    <!-- Always visible: the first few toppers -->
+    <div class="grid">
+      @for (s of featured; track $index; let i = $index) {
+        <ng-container *ngTemplateOutlet="card; context: { $implicit: s, i: i }" />
+      }
+    </div>
+
+    <!-- Everyone else, collapsed until asked for -->
+    @if (rest.length) {
+      <div class="more" id="hof-more" [class.open]="expanded()" [attr.inert]="expanded() ? null : ''">
+        <div class="more-inner">
+          <div class="grid">
+            @for (s of rest; track $index; let i = $index) {
+              <ng-container *ngTemplateOutlet="card; context: { $implicit: s, i: i + featured.length }" />
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle" appReveal>
+        <button type="button" class="btn btn-primary" (click)="toggleAll()"
+                [attr.aria-expanded]="expanded()" aria-controls="hof-more">
+          @if (expanded()) { Show fewer <span class="chev up">⌃</span> }
+          @else { View all {{ students.length }} toppers <span class="chev">⌄</span> }
+        </button>
+      </div>
+    }
+  </div>
+</section>
+
+<ng-template #card let-s let-i="i">
+  <div class="flip" appReveal="zoom" [revealDelay]="(i % 4) * 110">
+    <button type="button" class="flip-inner" [class.flipped]="flipped().has(i)" (click)="toggle(i)"
+            [attr.aria-pressed]="flipped().has(i)" [attr.aria-label]="s.name + ' — show ' + (flipped().has(i) ? 'achievement' : 'more details')">
+
+      <!-- FRONT: photo + achievement -->
+      <div class="face front">
+        <app-avatar class="photo" [src]="s.photo" [name]="s.name" />
+        <span class="year">★ {{ s.exam }}@if (s.year) { · {{ s.year }}}</span>
+        <div class="overlay">
+          <h3>{{ s.name }}</h3>
+          <p>{{ s.achievement }}</p>
+          <span class="hint">{{ s.currently ? 'Where are they now?' : s.school }} <span class="spin">↻</span></span>
+        </div>
+      </div>
+
+      <!-- BACK: what they're doing now (or their school until that's known) -->
+      <div class="face back">
+        <app-avatar class="mini" [src]="s.photo" [name]="s.name" />
+        <h3>{{ s.name }}</h3>
+        <span class="tag">{{ s.currently ? 'Currently' : 'School' }}</span>
+        <p class="now">{{ s.currently || s.school }}</p>
+        <div class="was">
+          <span class="tag light">At Alpha Classes · {{ s.year || s.exam }}</span>
+          <p>{{ s.achievement }}</p>
+        </div>
+        <span class="hint">↺ Flip back</span>
+      </div>
+    </button>
+  </div>
+</ng-template>

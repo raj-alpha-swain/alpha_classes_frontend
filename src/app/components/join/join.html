@@ -1,0 +1,144 @@
+<section class="section join" id="join">
+  <div class="container">
+    <div class="shell" appReveal="zoom">
+      <!-- left: dark intro panel -->
+      <div class="intro">
+        <span class="orb" aria-hidden="true"></span>
+        <span class="eyebrow light">Teach with us</span>
+        <h2>Join the <em class="accent grad-text">Alpha Classes</em> faculty</h2>
+        <p>Passionate about teaching? Share your qualifications and resume — Prof. Swain reviews every application personally.</p>
+
+        <ol class="steps">
+          @for (s of steps; track s.n; let i = $index) {
+            <li appReveal="left" [revealDelay]="200 + i * 120">
+              <span class="num">{{ s.n }}</span>
+              <span><strong>{{ s.t }}</strong><small>{{ s.d }}</small></span>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- right: form -->
+      <div class="form-side">
+        @if (status() === 'sent') {
+          <div class="done" role="status">
+            <div class="confetti" aria-hidden="true">
+              @for (c of [0,1,2,3,4,5,6,7,8,9,10,11]; track c) { <i [style.--c]="c"></i> }
+            </div>
+            <svg class="check" viewBox="0 0 52 52" aria-hidden="true">
+              <circle cx="26" cy="26" r="24" fill="none" />
+              <path fill="none" d="M14 27l8 8 16-17" />
+            </svg>
+            <h3>Application sent!</h3>
+            <p>Thank you. Your details and resume are on their way to Prof. Swain. We'll contact you soon.</p>
+            <button class="btn btn-outline" (click)="reset()">Submit another</button>
+          </div>
+        } @else {
+          <div class="meter" aria-hidden="true">
+            <div class="meter-top">
+              <span>Application progress</span><b>{{ completion() }}%</b>
+            </div>
+            <div class="bar"><span [style.width.%]="completion()"></span></div>
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+            <div class="row2">
+              <div class="field" [class.bad]="invalid('fullName')">
+                <input id="f-name" formControlName="fullName" autocomplete="name" placeholder=" " />
+                <label for="f-name">Full name *</label>
+                @if (invalid('fullName')) { <em>Please enter your name.</em> }
+              </div>
+              <div class="field" [class.bad]="invalid('email')">
+                <input id="f-email" type="email" formControlName="email" autocomplete="email" placeholder=" " />
+                <label for="f-email">Email *</label>
+                @if (invalid('email')) { <em>Please enter a valid email.</em> }
+              </div>
+            </div>
+
+            <div class="row2">
+              <div class="field" [class.bad]="invalid('phone')">
+                <input id="f-phone" type="tel" formControlName="phone" autocomplete="tel" placeholder=" " />
+                <label for="f-phone">Phone / WhatsApp *</label>
+                @if (invalid('phone')) { <em>Please enter a valid phone number.</em> }
+              </div>
+              <div class="field select" [class.bad]="invalid('highestQualification')">
+                <select id="f-qual" formControlName="highestQualification" [class.filled]="form.controls.highestQualification.value">
+                  <option value="" disabled></option>
+                  @for (q of qualificationOptions; track q) { <option [value]="q">{{ q }}</option> }
+                </select>
+                <label for="f-qual">Highest qualification *</label>
+                @if (invalid('highestQualification')) { <em>Please select your qualification.</em> }
+              </div>
+            </div>
+
+            <div class="field">
+              <textarea id="f-quals" rows="3" formControlName="otherQualifications" placeholder=" "></textarea>
+              <label for="f-quals">Degrees &amp; qualification details</label>
+              <small class="hint">e.g. M.Sc. Physics, Utkal University (2018) · B.Ed. (2020) · CTET qualified</small>
+            </div>
+
+            <div class="row2">
+              <div class="field" [class.bad]="invalid('subjects')">
+                <input id="f-subj" formControlName="subjects" placeholder=" " />
+                <label for="f-subj">Subjects you can teach *</label>
+                @if (invalid('subjects')) { <em>Please list at least one subject.</em> }
+              </div>
+              <div class="field">
+                <input id="f-cls" formControlName="classesPreferred" placeholder=" " />
+                <label for="f-cls">Classes you prefer (e.g. 8–12)</label>
+              </div>
+            </div>
+
+            <div class="row2">
+              <div class="field" [class.bad]="invalid('experienceYears')">
+                <input id="f-exp" type="number" min="0" max="60" formControlName="experienceYears" placeholder=" " />
+                <label for="f-exp">Teaching experience (years)</label>
+              </div>
+              <div class="field">
+                <input id="f-loc" formControlName="location" placeholder=" " />
+                <label for="f-loc">Your area / locality</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <textarea id="f-msg" rows="3" formControlName="message" placeholder=" "></textarea>
+              <label for="f-msg">Anything else you'd like us to know</label>
+            </div>
+
+            <label class="drop" [class.has-file]="resume()" [class.drag]="dragging()" [class.bad]="fileError()"
+                   (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+              <input #fileInput type="file" accept=".pdf,.doc,.docx" (change)="onFile($event)" />
+              @if (resume(); as f) {
+                <span class="drop-icon ok">✓</span>
+                <span class="drop-text">
+                  <strong>{{ f.name }}</strong>
+                  <small>{{ (f.size / 1024 / 1024).toFixed(2) }} MB · click to change</small>
+                </span>
+                <button type="button" class="remove" (click)="removeFile($event, fileInput)" aria-label="Remove file">✕</button>
+              } @else {
+                <span class="drop-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                </span>
+                <span class="drop-text">
+                  <strong>{{ dragging() ? 'Drop it here!' : 'Upload your resume *' }}</strong>
+                  <small>Drag &amp; drop or click · PDF or Word, up to {{ maxMb }} MB</small>
+                </span>
+              }
+            </label>
+            @if (fileError()) { <em class="file-err">{{ fileError() }}</em> }
+
+            @if (status() === 'error') { <div class="alert" role="alert">{{ serverError() }}</div> }
+
+            <button type="submit" class="btn btn-grad submit" [disabled]="status() === 'sending'">
+              @if (status() === 'sending') {
+                <span class="spinner" aria-hidden="true"></span> Sending your application…
+              } @else {
+                Submit application <span class="arrow">→</span>
+              }
+            </button>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</section>

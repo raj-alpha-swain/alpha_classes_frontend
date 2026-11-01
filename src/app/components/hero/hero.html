@@ -1,0 +1,86 @@
+<section class="hero" id="top">
+  <!-- animated background -->
+  <div class="bg" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <div class="grid"></div>
+    @for (s of symbols; track s.s; let i = $index) {
+      <span class="sym" [style.left.%]="s.x" [style.top.%]="s.y" [style.--i]="i">{{ s.s }}</span>
+    }
+  </div>
+
+  <div class="container hero-grid">
+    <div class="copy">
+      <span class="pill"><span class="dot"></span> Coaching &amp; home tuition provider by Alpha Classes</span>
+
+      <h1>
+        <span class="line"><span>Alpha</span></span>
+        <span class="line"><span class="grad-text">Classes</span></span>
+      </h1>
+      <p class="headline">{{ classes.headline }}</p>
+
+      <p class="typed">
+        Expert coaching in
+        <span class="word">{{ typed() }}</span><span class="caret">|</span>
+      </p>
+      <p class="lead">{{ classes.tagline }}</p>
+
+      <div class="actions">
+        <a href="#contact" class="btn btn-grad">Book a demo class <span class="arrow">→</span></a>
+        <a href="#hall-of-fame" class="btn btn-ghost">See our toppers</a>
+      </div>
+
+      <div class="trust">
+        <div class="faces">
+          @for (f of faces; track $index) {
+            <app-avatar class="face" [src]="f.photo" [name]="f.name" [style.--i]="$index" />
+          }
+        </div>
+        <span><b>{{ owner.stats[1].value }}</b> students guided to better results</span>
+      </div>
+    </div>
+
+    <div class="visual">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="portrait-card" appTilt>
+        <app-avatar class="portrait" [src]="owner.photo" [name]="owner.name" />
+        <div class="glare" aria-hidden="true"></div>
+        <div class="caption">
+          <strong>{{ owner.name }}</strong>
+          <span>{{ owner.title }}</span>
+        </div>
+      </div>
+      <div class="badge badge-a">
+        <span class="badge-icon">🏆</span>
+        <span><b>{{ owner.stats[2].value }}</b><small>{{ owner.stats[2].label }}</small></span>
+      </div>
+      <div class="badge badge-b">
+        <span class="badge-icon">🎓</span>
+        <span><b>{{ owner.stats[0].value }}</b><small>{{ owner.stats[0].label }}</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats">
+      @for (s of owner.stats; track s.label) {
+        <div class="stat">
+          <b [appCountUp]="s.value"></b>
+          <span>{{ s.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+</section>
+
+<!-- infinite subject marquee -->
+<div class="marquee" aria-label="Subjects taught">
+  <div class="track">
+    @for (n of [0, 1]; track n) {
+      @for (s of classes.subjects; track s) {
+        <span class="item">{{ s }}</span><span class="star" aria-hidden="true">✦</span>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<section class="section" id="about">
+  <div class="container about-grid">
+    <div>
+      <span class="eyebrow" appReveal>About the founder</span>
+      <h2 appReveal [revealDelay]="80">Meet <span class="grad-text">{{ owner.name }}</span></h2>
+
+      <blockquote appReveal [revealDelay]="160">
+        <span class="qmark" aria-hidden="true">“</span>
+        {{ owner.quote }}
+      </blockquote>
+
+      @for (p of owner.bio; track $index) {
+        <p class="bio" appReveal [revealDelay]="220 + $index * 80">{{ p }}</p>
+      }
+    </div>
+
+    <aside class="quals card" appReveal="right" [revealDelay]="120">
+      <div class="quals-head">
+        <span class="cap" aria-hidden="true">🎓</span>
+        <h3>Degrees & Qualifications</h3>
+      </div>
+      <ol class="timeline">
+        @for (q of owner.qualifications; track q.degree; let i = $index) {
+          <li appReveal [revealDelay]="300 + i * 140">
+            <span class="node" aria-hidden="true"></span>
+            <strong>{{ q.degree }}</strong>
+            <span>{{ q.institute }}</span>
+          </li>
+        }
+      </ol>
+    </aside>
+  </div>
+
+  <div class="container">
+    <div class="points">
+      @for (pt of classes.points; track pt.title; let i = $index) {
+        <div class="point" appReveal [revealDelay]="i * 100">
+          <span class="point-icon" aria-hidden="true">{{ pt.icon }}</span>
+          <h3>{{ pt.title }}</h3>
+          <p>{{ pt.text }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

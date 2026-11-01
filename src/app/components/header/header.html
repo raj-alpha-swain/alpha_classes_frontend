@@ -1,0 +1,22 @@
+<header class="header" [class.scrolled]="scrolled() || menuOpen()" [class.menu-open]="menuOpen()">
+  <div class="container bar">
+    <a href="#top" class="brand" (click)="close()" aria-label="Alpha Classes home">
+      <span class="mark"><img src="logo.svg" alt="" /></span>
+      <span class="word">Alpha <b>Classes</b></span>
+    </a>
+
+    <nav [class.open]="menuOpen()" aria-label="Main">
+      @for (l of links; track l.id; let i = $index) {
+        <a [href]="'#' + l.id" (click)="close()" [class.active]="active() === l.id" [style.--i]="i">{{ l.label }}</a>
+      }
+      <a href="#contact" class="btn btn-grad cta" (click)="close()" [style.--i]="links.length">
+        Book a demo <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <button class="menu-btn" [class.open]="menuOpen()" (click)="toggle()" [attr.aria-expanded]="menuOpen()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="progress" [style.transform]="'scaleX(' + progress() / 100 + ')'"></div>
+</header>
