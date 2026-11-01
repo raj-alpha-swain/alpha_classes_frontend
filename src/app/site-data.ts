@@ -17,7 +17,7 @@ export const CONTACT = {
 export const OWNER = {
   name: 'Mr. Debendra Kumar Swain',
   title: 'Founder & Head Teacher, Alpha Classes',
-  photo: 'images/professor.jpg',
+  photo: 'images/founder.jpg',
   quote: 'A student who understands the “why” never has to memorise the “how”.',  // TODO: his own words
   bio: [
     'Mr. Debendra Kumar Swain founded Alpha Classes with one simple belief: every student can excel when concepts are taught clearly and patiently, one doubt at a time.',
